@@ -1,84 +1,62 @@
 const fs = require("fs");
 const path = require("path");
+const { sendMessage } = require("../../utils");
 
 module.exports = {
-  execute: async (client, event) => {
+  execute: async (client, event, args) => {
     try {
-      const filePath = path.join(__dirname, "../../data/lottery_data.json");
-      const fileContent = fs.readFileSync(filePath, "utf8");
-      const data = JSON.parse(fileContent);
-
-      const args = event?.content?.t.split(" ");
-      let dateArg = args[1];
-
-      let targetDate;
-      if (dateArg) {
-        const [day, month, year] = dateArg.split("/");
-        targetDate = `${year}-${month.padStart(2, "0")}-${day.padStart(
-          2,
-          "0"
-        )}`;
-      } else {
-        targetDate = new Date().toISOString().split("T")[0];
+      const dateArg = args[0];
+      if (!dateArg) {
+        return sendMessage(
+          client,
+          event?.clan_id,
+          event?.channel_id,
+          event?.is_public,
+          { t: "```Vui lòng cung cấp ngày theo định dạng: *xsmb DD/MM/YYYY```" }
+        );
       }
 
-      const targetData = data.find((item) => item.date === targetDate);
+      const [day, month, year] = dateArg.split("/");
+      const formattedDate = `${year}-${month}-${day}`;
 
-      if (targetData) {
-        await client.sendMessage(
+      const dataFilePath = path.join(__dirname, "../../data/lottery_data.json");
+      const data = JSON.parse(fs.readFileSync(dataFilePath, "utf-8"));
+
+      const result = data.find((entry) => entry.date === formattedDate);
+
+      if (result) {
+        const formattedResult = `\`\`\`
+        Kết quả XSMB ngày ${dateArg}:
+        G.DB: ${result.data[0]}
+        G.1:  ${result.data[1]}
+        G.2:  ${result.data[2].split(",").join(" - ")}
+        G.3:  ${result.data[3].split(",").join(" - ")}
+        G.4:  ${result.data[4].split(",").join(" - ")}
+        G.5:  ${result.data[5].split(",").join(" - ")}
+        G.6:  ${result.data[6].split(",").join(" - ")}
+        G.7:  ${result.data[7].split(",").join(" - ")}
+      \`\`\``;
+        sendMessage(
+          client,
           event?.clan_id,
           event?.channel_id,
-          2,
           event?.is_public,
           {
-            t: `Kết quả XSMB của ngày ${dateArg || "today"}: ${JSON.stringify(
-              targetData.data
-            )}`,
-          },
-          [],
-          [],
-          [
-            {
-              message_id: "",
-              message_ref_id: event.message_id,
-              ref_type: 0,
-              message_sender_id: event.sender_id,
-              message_sender_username: event.username,
-              mesages_sender_avatar: event.avatar,
-              message_sender_clan_nick: event.clan_nick,
-              message_sender_display_name: event.display_name,
-              content: JSON.stringify(event.content),
-              has_attachment: false,
-            },
-          ]
+            t: formattedResult,
+            mk: [{ type: "t", s: 0, e: formattedResult.length }],
+          }
         );
       } else {
-        await client.sendMessage(
+        sendMessage(
+          client,
           event?.clan_id,
           event?.channel_id,
-          2,
           event?.is_public,
-          { t: `Không có kết quả XSMB của ngày ${dateArg || "hôm nay"}.` },
-          [],
-          [],
-          [
-            {
-              message_id: "",
-              message_ref_id: event.message_id,
-              ref_type: 0,
-              message_sender_id: event.sender_id,
-              message_sender_username: event.username,
-              mesages_sender_avatar: event.avatar,
-              message_sender_clan_nick: event.clan_nick,
-              message_sender_display_name: event.display_name,
-              content: JSON.stringify(event.content),
-              has_attachment: false,
-            },
-          ]
+          { t: `Không tìm thấy kết quả cho ngày ${dateArg}.` }
         );
       }
     } catch (error) {
-      console.error("Error reading data or responding:", error);
+      console.error(`Error in xsmb command:`, error);
     }
   },
 };
