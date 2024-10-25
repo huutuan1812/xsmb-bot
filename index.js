@@ -30,7 +30,7 @@ async function main() {
   await loadCommands();
 
   client.on("channel_message", async (event) => {
-    const content = event?.content?.t?.trim();
+    const content = event?.content?.t?.trim?.();
 
     if (content && content.startsWith("*")) {
       const [commandName, ...args] = content.slice(1).split(" ");
