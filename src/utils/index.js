@@ -1,11 +1,14 @@
 module.exports = {
-  sendMessage: (client, clanId, channelId, isPublic, messageContent) => {
+  sendMessage: (client, event, messageContent) => {
     client.sendMessage(
-      clanId,
-      channelId,
+      event?.clan_id,
+      event?.channel_id,
       2,
-      isPublic,
-      messageContent,
+      event?.is_public,
+      {
+        t: messageContent,
+        mk: [{ type: "t", s: 0, e: messageContent.length }],
+      },
       [],
       [],
       []

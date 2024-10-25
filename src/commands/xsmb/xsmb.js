@@ -2,58 +2,35 @@ const fs = require("fs");
 const path = require("path");
 const { sendMessage } = require("../../utils");
 
+const msgHelp = "```*xsmb DD/MM/YYYY```";
 module.exports = {
   execute: async (client, event, args) => {
     try {
       const dateArg = args[0];
       if (!dateArg) {
-        return sendMessage(
-          client,
-          event?.clan_id,
-          event?.channel_id,
-          event?.is_public,
-          { t: "```Vui lòng cung cấp ngày theo định dạng: *xsmb DD/MM/YYYY```" }
-        );
+        return sendMessage(client, event, msgHelp);
       }
-
-      const [day, month, year] = dateArg.split("/");
-      const formattedDate = `${year}-${month}-${day}`;
 
       const dataFilePath = path.join(__dirname, "../../data/lottery_data.json");
       const data = JSON.parse(fs.readFileSync(dataFilePath, "utf-8"));
-
-      const result = data.find((entry) => entry.date === formattedDate);
+      const result = data[dateArg];
 
       if (result) {
-        const formattedResult = `\`\`\`
-        Kết quả XSMB ngày ${dateArg}:
-        G.DB: ${result.data[0]}
-        G.1:  ${result.data[1]}
-        G.2:  ${result.data[2].split(",").join(" - ")}
-        G.3:  ${result.data[3].split(",").join(" - ")}
-        G.4:  ${result.data[4].split(",").join(" - ")}
-        G.5:  ${result.data[5].split(",").join(" - ")}
-        G.6:  ${result.data[6].split(",").join(" - ")}
-        G.7:  ${result.data[7].split(",").join(" - ")}
-      \`\`\``;
-        sendMessage(
-          client,
-          event?.clan_id,
-          event?.channel_id,
-          event?.is_public,
-          {
-            t: formattedResult,
-            mk: [{ type: "t", s: 0, e: formattedResult.length }],
-          }
-        );
+        const formattedResult =
+          `Kết quả XSMB ngày ${dateArg}:\n` +
+          `G.DB: ${result[0]}\n` +
+          `G.1:  ${result[1]}\n` +
+          `G.2:  ${result[2].split(",").join(" - ")}\n` +
+          `G.3:  ${result[3].split(",").join(" - ")}\n` +
+          `G.4:  ${result[4].split(",").join(" - ")}\n` +
+          `G.5:  ${result[5].split(",").join(" - ")}\n` +
+          `G.6:  ${result[6].split(",").join(" - ")}\n` +
+          `G.7:  ${result[7].split(",").join(" - ")}`;
+
+        sendMessage(client, event, formattedResult);
       } else {
-        sendMessage(
-          client,
-          event?.clan_id,
-          event?.channel_id,
-          event?.is_public,
-          { t: `Không tìm thấy kết quả cho ngày ${dateArg}.` }
-        );
+        const message = `Không tìm thấy kết quả XSMB ngày ${dateArg}.`;
+        sendMessage(client, event, message);
       }
     } catch (error) {
       console.error(`Error in xsmb command:`, error);
