@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const { sendMessage, formatMessage } = require("../../utils");
+const { sendMessage } = require("../../utils");
 const poeticVerses = require("../../constants/constants");
 
 module.exports = {
@@ -54,18 +54,6 @@ module.exports = {
       });
 
       maxMissDays = Math.max(maxMissDays, currentMissDays);
-      const averageInterval =
-        count > 1 ? (totalInterval / (count - 1)).toFixed(2) : "Xui lắm";
-
-      const frequencyScore =
-        count === 0 ? 0 : Math.min(10, 4 + (count - 1) * 0.5);
-      const intervalScore =
-        count > 1 ? Math.min(10, Math.max(2, 10 - averageInterval / 2)) : 2;
-      const missDaysScore = Math.max(1, 10 - maxMissDays / 3);
-      const overallScore = (
-        (frequencyScore + intervalScore + missDaysScore) /
-        3
-      ).toFixed(2);
 
       const formattedResult =
         "```" +
@@ -81,15 +69,9 @@ module.exports = {
         "- Số lần về trong tháng: " +
         count +
         " lần.\n" +
-        "- Số ngày không về dài nhất: " +
+        "- Chuỗi ngày không về dài nhất: " +
         maxMissDays +
         " ngày.\n" +
-        "- Chu kỳ trung bình: " +
-        averageInterval +
-        " ngày.\n" +
-        "- Hợp mệnh: " +
-        overallScore +
-        "/10.\n" +
         "```";
 
       sendMessage(client, event, formattedResult);
