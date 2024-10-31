@@ -17,15 +17,17 @@ module.exports = {
 
       if (result) {
         const formattedResult =
+          "```" +
           `Kết quả XSMB ngày ${dateArg}:\n` +
-          `G.DB: ${result[0]}\n` +
-          `G.1:  ${result[1]}\n` +
-          `G.2:  ${result[2].split(",").join(" - ")}\n` +
-          `G.3:  ${result[3].split(",").join(" - ")}\n` +
-          `G.4:  ${result[4].split(",").join(" - ")}\n` +
-          `G.5:  ${result[5].split(",").join(" - ")}\n` +
-          `G.6:  ${result[6].split(",").join(" - ")}\n` +
-          `G.7:  ${result[7].split(",").join(" - ")}`;
+          `Giải ĐB  : ${result[0]}\n` +
+          `Giải nhất: ${result[1]}\n` +
+          `Giải nhì : ${result[2].split(",").join(" - ")}\n` +
+          `Giải ba  : ${result[3].split(",").join(" - ")}\n` +
+          `Giải tư  : ${result[4].split(",").join(" - ")}\n` +
+          `Giải năm : ${result[5].split(",").join(" - ")}\n` +
+          `Giải sáu : ${result[6].split(",").join(" - ")}\n` +
+          `Giải bảy : ${result[7].split(",").join(" - ")}` +
+          "```";
 
         sendMessage(client, event, formattedResult);
       } else {

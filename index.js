@@ -5,6 +5,8 @@ const path = require("path");
 const util = require("util");
 dotenv.config();
 const readdir = util.promisify(fs.readdir);
+const cron = require("node-cron");
+const { crawlData } = require("./src/utils/crawData");
 
 const commands = {};
 
@@ -46,6 +48,16 @@ async function main() {
       }
     }
   });
+  const job = cron.schedule(
+    "30 19 * * *",
+    () => {
+      crawlData();
+    },
+    {
+      timezone: "Asia/Ho_Chi_Minh",
+    }
+  );
+  job.start();
 }
 
 main()
