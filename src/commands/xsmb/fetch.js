@@ -8,7 +8,7 @@ module.exports = {
       const helpMessage = "```" + "Thành Công! \n" + "```";
       sendMessage(client, event, helpMessage);
     } catch (error) {
-      sendMessage(client, event, `Không tìm thấy kết quả cho số ${args[0]}.`);
+      sendMessage(client, event, "```" + `Không thể lấy được dữ liệu.` + "```");
     }
   },
 };

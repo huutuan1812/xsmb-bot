@@ -13,7 +13,7 @@ module.exports = {
         "```";
       sendMessage(client, event, helpMessage);
     } catch (error) {
-      sendMessage(client, event, `Không tìm thấy kết quả cho số ${args[0]}.`);
+      console.error(error);
     }
   },
 };

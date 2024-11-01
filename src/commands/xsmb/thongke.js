@@ -35,9 +35,7 @@ module.exports = {
         const isPresent = prizes.some((prize) =>
           prize
             .split(",")
-            .some(
-              (prizeNumber) => prizeNumber.trim().slice(-2) === targetNumber
-            )
+            .some((prizeNumber) => prizeNumber.trim().slice(-2) === targetNumber)
         );
 
         if (isPresent) {
@@ -76,7 +74,11 @@ module.exports = {
 
       sendMessage(client, event, formattedResult);
     } catch (error) {
-      sendMessage(client, event, `Không tìm thấy kết quả cho số ${args[0]}.`);
+      sendMessage(
+        client,
+        event,
+        "```" + `Không tìm thấy kết quả cho số ${args[0]}.` + "```"
+      );
     }
   },
 };

@@ -31,7 +31,7 @@ module.exports = {
 
         sendMessage(client, event, formattedResult);
       } else {
-        const message = `Không tìm thấy kết quả XSMB ngày ${dateArg}.`;
+        const message = "```" + `Không tìm thấy kết quả XSMB ngày ${dateArg}.` + "```";
         sendMessage(client, event, message);
       }
     } catch (error) {

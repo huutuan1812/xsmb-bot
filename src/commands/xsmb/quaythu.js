@@ -30,7 +30,7 @@ module.exports = {
     try {
       const results = generateLotteryResults();
       const formattedResults = formatLotteryResults(results);
-      const formattedMessages = "```Kết quả quay thử XSMB" + formattedResults + "```";
+      const formattedMessages = "```Kết quả quay thử XSMB\n" + formattedResults + "```";
       sendMessage(client, event, formattedMessages);
     } catch (error) {
       console.error(`Error in *quaythu command:`, error);

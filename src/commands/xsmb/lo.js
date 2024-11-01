@@ -48,6 +48,12 @@ module.exports = {
         const formattedMessage = `\`\`\`Kết quả Lô miền Bắc ngày ${dateArg}:\nĐầu |  Lô${message}\`\`\``;
 
         sendMessage(client, event, formattedMessage);
+      } else {
+        sendMessage(
+          client,
+          event,
+          "```" + `Không tìm thấy kết quả Lô ngày ${dateArg}` + "```"
+        );
       }
     } catch (error) {
       console.error(`Error in *lo command:`, error);
