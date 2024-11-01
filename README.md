@@ -20,3 +20,32 @@ Copy `.env.example` to `.env` and replace it with your application token.
 # development
 $ yarn start
 ```
+
+## COMMANDS
+
+```bash
+*xsmb [DD/MM/YYYY]
+```
+
+xem kết quả xổ số miền Bắc vào ngày DD/MM/YYYY
+
+```bash
+*lo [DD/MM/YYYY]
+```
+
+xem kết quả lô vào ngày DD/MM/YYYY
+
+```bash
+*thongke [number]
+```
+
+xem thông kê cho số đó trong tháng này
+
+```bash
+*quaythu
+```
+
+quay thử kết quả xổ số miền Bắc
+
+## Help
+![image](./src/public/example.png)
