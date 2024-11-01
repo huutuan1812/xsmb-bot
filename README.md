@@ -27,25 +27,25 @@ $ yarn start
 *xsmb [DD/MM/YYYY]
 ```
 
-xem kết quả xổ số miền Bắc vào ngày DD/MM/YYYY
+Xem kết quả xổ số miền Bắc vào ngày DD/MM/YYYY
 
 ```bash
 *lo [DD/MM/YYYY]
 ```
 
-xem kết quả lô vào ngày DD/MM/YYYY
+Xem kết quả lô vào ngày DD/MM/YYYY
 
 ```bash
 *thongke [number]
 ```
 
-xem thông kê cho số đó trong tháng này
+Xem thông kê cho số đó trong tháng này
 
 ```bash
 *quaythu
 ```
 
-quay thử kết quả xổ số miền Bắc
+Quay thử kết quả xổ số miền Bắc
 
 ## Help
-![image](./src/public/example.png)
+![image](./public/example.png)
